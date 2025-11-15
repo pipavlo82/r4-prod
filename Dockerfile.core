@@ -1,0 +1,13 @@
+FROM python:3.12-alpine
+
+WORKDIR /app
+
+# Мінімум залежностей
+RUN pip install --no-cache-dir fastapi uvicorn
+
+COPY core_dev.py /app/core_dev.py
+
+ENV PYTHONUNBUFFERED=1
+
+CMD ["uvicorn", "core_dev:app", "--host", "0.0.0.0", "--port", "8080"]
+

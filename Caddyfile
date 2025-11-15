@@ -1,0 +1,18 @@
+{
+    # Локальний CA, без Let's Encrypt (ідеально для dev/локального стенду)
+    local_certs
+}
+
+{$R4_DOMAIN} {
+    encode gzip
+
+    @api path /v1/* /health /docs /openapi.json
+    handle @api {
+        reverse_proxy r4-gateway:8082
+    }
+
+    # Проста index-сторінка, якщо зайдуть без /v1/...
+    handle {
+        respond "RE4CTOR SaaS API – online. See /docs or /v1/meta" 200
+    }
+}
